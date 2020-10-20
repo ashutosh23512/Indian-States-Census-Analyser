@@ -9,7 +9,7 @@ public class StateCensusAnalyserTest {
 
 	public static final String STATE_CENSUS_DATA = "StateCensus.csv";
 	public static final String WRONG_STATE_CENSUS_DATA = "src/main/java/com/StateCensus.csv";
-	public static final String WRONG_STATE_CENSUS_DATA_HEADER = "StateCode.csv";
+	public static final String WRONG_STATE_CENSUS_DATA_HEADER = "StateCodee.csv";
 	public static final String WRONG_STATE_CENSUS_DATA_TYPE = "StateCensus.txt";
 
 	StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
