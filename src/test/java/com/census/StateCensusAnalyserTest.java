@@ -16,14 +16,14 @@ public class StateCensusAnalyserTest {
 
 	@Test
 	public void ensureNoOfRecordMatches() throws CensusException {
-		int records = stateCensusAnalyser.loadCSVFile(Paths.get(STATE_CENSUS_DATA));
+		int records = stateCensusAnalyser.loadCSVFileCensus(Paths.get(STATE_CENSUS_DATA));
 		Assert.assertEquals(29, records);
 	}
 
 	@Test
 	public void checkWrongPath() throws CensusException {
 		try {
-			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA));
+			stateCensusAnalyser.loadCSVFileCensus(Paths.get(WRONG_STATE_CENSUS_DATA));
 		} catch (CensusException e) {
 			Assert.assertEquals(CensusException.ExceptionType.WRONG_CSV, e.type);
 		}
@@ -32,20 +32,20 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void checkWrongHeader() throws CensusException {
 		try {
-			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA_HEADER));
+			stateCensusAnalyser.loadCSVFileCensus(Paths.get(WRONG_STATE_CENSUS_DATA_HEADER));
 		} catch (CensusException e) {
 			Assert.assertEquals(CensusException.ExceptionType.WRONG_HEADER, e.type);
-			
+
 		}
 	}
 
 	@Test
 	public void checkWrongType() throws CensusException {
 		try {
-			stateCensusAnalyser.loadCSVFile(Paths.get(WRONG_STATE_CENSUS_DATA_TYPE));
+			stateCensusAnalyser.loadCSVFileCensus(Paths.get(WRONG_STATE_CENSUS_DATA_TYPE));
 		} catch (CensusException e) {
 			Assert.assertEquals(CensusException.ExceptionType.WRONG_TYPE, e.type);
-			
+
 		}
 	}
 }
