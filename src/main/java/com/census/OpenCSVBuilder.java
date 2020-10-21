@@ -6,8 +6,10 @@ import java.util.Iterator;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-public class OpenCSVBuilder {
-	public <E> Iterator getCSVFileIterator(Reader reader, Class csvClass) throws CensusException {
+public class OpenCSVBuilder<E> implements ICSVBuilder<E> {
+
+	@Override
+	public Iterator<E> getCSVFileIterator(Reader reader, Class csvClass) throws CensusException {
 		try {
 			CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader).withType(csvClass).withIgnoreLeadingWhiteSpace(true)
 					.build();
