@@ -30,4 +30,7 @@ dependencies {
     //csv
     compile "com.opencsv:opencsv:4.0"
     
+    //gson
+    compile 'com.google.code.gson:gson:2.2.+'
+    
 }
