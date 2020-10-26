@@ -64,4 +64,12 @@ public class StateCensusAnalyserTest {
 		} catch (CensusException e) {
 		}
 	}
+
+	@Test
+	public void censusSortedOnState() throws CensusException {
+		stateCensusAnalyser.loadIndiaCensusData(Paths.get(STATE_CENSUS_DATA));
+		String sortedCensusData = stateCensusAnalyser.getSortedCensuByState();
+		CSVStateCensus[] censusCsv = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+		Assert.assertEquals("Andhra Pradesh", censusCsv[0].state);
+	}
 }
