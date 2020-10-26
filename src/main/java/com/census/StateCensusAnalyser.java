@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -14,9 +15,8 @@ import java.util.stream.StreamSupport;
 
 import com.google.gson.Gson;
 
-
 public class StateCensusAnalyser {
-	
+
 	List<CSVStateCensus> csvCensusList;
 	List<StateCode> csvStateList;
 
@@ -27,36 +27,33 @@ public class StateCensusAnalyser {
 	}
 
 	public int loadIndiaCensusData(Path path) throws CensusException {
-		
+
 		try (Reader reader = Files.newBufferedReader(path);) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 			csvCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
 			return csvCensusList.size();
 		} catch (IOException e) {
-			throw new CensusException("File not found",
-					CensusException.ExceptionType.WRONG_CSV);
+			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
 		} catch (RuntimeException e) {
-			throw new CensusException("File data not proper",
-					CensusException.ExceptionType.WRONG_CSV);
+			throw new CensusException("File data not proper", CensusException.ExceptionType.WRONG_CSV);
 
-		}catch (CSVException e) {
+		} catch (CSVException e) {
 			throw new CensusException(e.getMessage(), CensusException.ExceptionType.WRONG_HEADER);
 		}
 	}
 
 	public int loadIndiaStateCodeData(Path path) throws CensusException {
-		
-		try (Reader reader = Files.newBufferedReader(path);) {
+
+		try (Reader reader = Files.newBufferedReader(path)) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 			csvStateList = csvBuilder.getCSVFileList(reader, StateCode.class);
 			return csvStateList.size();
 		} catch (IOException e) {
-			throw new CensusException("File not found",
-					CensusException.ExceptionType.WRONG_CSV);
+			throw new CensusException("File not found", CensusException.ExceptionType.WRONG_CSV);
 		} catch (RuntimeException e) {
-			throw new CensusException("File data not proper",
-					CensusException.ExceptionType.WRONG_CSV);
-		}catch (CSVException e) {
+			throw new CensusException("File data not proper", CensusException.ExceptionType.WRONG_CSV);
+
+		} catch (CSVException e) {
 			throw new CensusException(e.getMessage(), CensusException.ExceptionType.WRONG_HEADER);
 		}
 
@@ -67,6 +64,7 @@ public class StateCensusAnalyser {
 		int numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
 		return numOfEntries;
 	}
+
 	public String getSortedCensuByState() throws CensusException {
 		if (csvCensusList == null || csvCensusList.size() == 0)
 
@@ -91,5 +89,13 @@ public class StateCensusAnalyser {
 				}
 			}
 		}
+	}
+
+	public String getStateCodeWiseSortedCensusData() throws CensusException {
+		if (csvStateList == null || csvStateList.size() == 0) {
+			throw new CensusException("File is empty", CensusException.ExceptionType.WRONG_CSV);
+		}
+		Collections.sort(csvStateList, Comparator.comparing(code -> code.stateCode));
+		return new Gson().toJson(csvStateList);
 	}
 }
