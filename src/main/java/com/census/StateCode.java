@@ -1,25 +1,24 @@
 package com.census;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class StateCode {
-
+	@CsvBindByName(column = "SrNo", required = true)
 	public String srNo;
+
+	@CsvBindByName(column = "StateName", required = true)
 	public String stateName;
+
+	@CsvBindByName(column = "TIN", required = true)
 	public int tin;
+
+	@CsvBindByName(column = "StateCode", required = true)
 	public String stateCode;
-
-	public StateCode() {
-	}
-
-	public StateCode(String srNo, String stateName, int tin, String stateCode) {
-		this.srNo = srNo;
-		this.stateName = stateName;
-		this.tin = tin;
-		this.stateCode = stateCode;
-	}
 
 	@Override
 	public String toString() {
 		return "IndiaStateCodeCSV{" + "srNo='" + srNo + '\'' + ", stateName=" + stateName + ", tin=" + tin
 				+ ", stateCode=" + stateCode + '}';
+
 	}
 }
