@@ -77,6 +77,7 @@ public class StateCensusAnalyser {
 		String sortedStateCensus = new Gson().toJson(csvCensusList);
 		return sortedStateCensus;
 	}
+	
 
 	private void sort(Comparator<CSVStateCensus> censusComparator) {
 		for (int i = 0; i < csvCensusList.size() - 1; i++) {
@@ -103,6 +104,14 @@ public class StateCensusAnalyser {
 			throw new CensusException("File is empty", CensusException.ExceptionType.WRONG_CSV);
 		}
 		Collections.sort(csvCensusList, Comparator.comparing(census -> census.getPopulationData()));
+		System.out.println(csvCensusList);
+		return new Gson().toJson(csvCensusList);
+	}
+	public String getStatePopulationDensityWiseSortedCensusData() throws CensusException {
+		if(csvCensusList == null || csvCensusList.size() == 0) {
+			throw new CensusException("File is empty", CensusException.ExceptionType.WRONG_CSV);
+		}
+		Collections.sort(csvCensusList, Comparator.comparing(census -> census.getPopulationDensityData()));
 		System.out.println(csvCensusList);
 		return new Gson().toJson(csvCensusList);
 	}
