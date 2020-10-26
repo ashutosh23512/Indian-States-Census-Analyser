@@ -20,7 +20,7 @@ public class StateCodeAnalyserTest {
 	@Test
 	public void ensureNoOfRecordMatches() throws CensusException, CSVException {
 		int records = stateCensusAnalyser.loadIndiaStateCodeData(Paths.get(STATE_CODE_DATA));
-		Assert.assertEquals(36, records);
+		Assert.assertEquals(37, records);
 	}
 
 	@Test
@@ -47,9 +47,16 @@ public class StateCodeAnalyserTest {
 		try {
 			stateCensusAnalyser.loadIndiaStateCodeData(Paths.get(WRONG_STATE_CODE_DATA_TYPE));
 		} catch (CensusException e) {
-			Assert.assertEquals(CensusException.ExceptionType.WRONG_TYPE, e.type);
+			Assert.assertEquals(CensusException.ExceptionType.WRONG_CSV, e.type);
 			;
 		}
+	}
+	@Test
+	public void censusSortedOnStateCode() throws CensusException {
+		stateCensusAnalyser.loadIndiaStateCodeData(Paths.get(STATE_CODE_DATA));
+		String sortedCensusData = stateCensusAnalyser.getStateCodeWiseSortedCensusData();
+		StateCode[] censusCsv = new Gson().fromJson(sortedCensusData, StateCode[].class);
+		Assert.assertEquals("AD", censusCsv[0].stateCode);
 	}
 
 	
