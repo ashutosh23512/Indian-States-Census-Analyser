@@ -115,4 +115,12 @@ public class StateCensusAnalyser {
 		System.out.println(csvCensusList);
 		return new Gson().toJson(csvCensusList);
 	}
+	public String getAreaWiseData() throws CensusException {
+		if(csvCensusList == null || csvCensusList.size() == 0) {
+			throw new CensusException("File is empty", CensusException.ExceptionType.WRONG_CSV);
+		}
+		Collections.sort(csvCensusList, Comparator.comparing(census -> census.getArea()));
+		System.out.println(csvCensusList);
+		return new Gson().toJson(csvCensusList);
+	}
 }
